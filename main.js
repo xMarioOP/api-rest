@@ -8,4 +8,4 @@ fetch(URL)
 
 
         console.log(data[0].url);
-    })
+    });
