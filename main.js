@@ -21,7 +21,7 @@ async function fetchData(url) {
         console.log(data)
 
     } catch (error) {
-        console.error("error", error);
+        console.error("error", error)
     }
 }
 
