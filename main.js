@@ -2,9 +2,7 @@ const newImageBtn = document.getElementById("btn")
 const img1 = document.getElementById("img1")
 const img2 = document.getElementById("img2")
 const img3 = document.getElementById("img3")
-
 const spanError = document.getElementById("error")
-
 const btn1 = document.getElementById("btn1")
 const btn2 = document.getElementById("btn2")
 
