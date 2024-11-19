@@ -9,9 +9,9 @@ const btn1 = document.getElementById("btn1")
 const btn2 = document.getElementById("btn2")
 
 
-const API_URL_RANDOM = "https://api.thecatapi.com/v1/images/search?limit=5&api_key=live_IXdbF6NTpXDU8aDS8LQPdlyR2xkm0IMGq9Oo8R0X403cKFR0VlI2ZG8JOaZqFbIG"
-const API_URL_FAVORITES = "https://api.thecatapi.com/v1/favourites?limit=5&api_key=live_IXdbF6NTpXDU8aDS8LQPdlyR2xkm0IMGq9Oo8R0X403cKFR0VlI2ZG8JOaZqFbIG"
-const API_URL_FAVORITES_DELETE = (id) => `https://api.thecatapi.com/v1/favourites/${id}?limit=5&api_key=live_IXdbF6NTpXDU8aDS8LQPdlyR2xkm0IMGq9Oo8R0X403cKFR0VlI2ZG8JOaZqFbIG`
+const API_URL_RANDOM = "https://api.thecatapi.com/v1/images/search?limit=5"
+const API_URL_FAVORITES = "https://api.thecatapi.com/v1/favourites?limit=5"
+const API_URL_FAVORITES_DELETE = (id) => `https://api.thecatapi.com/v1/favourites/${id}`
 
 
 
@@ -28,12 +28,8 @@ async function loadRandomCats(url) {
         img2.src = data[1].url
         console.log("RANDOM:", data)
 
-        btn1.addEventListener("click", () => {
-            saveFavoritesCats(data[0].id);
-        })
-        btn2.addEventListener("click", () => {
-            saveFavoritesCats(data[1].id);
-        })
+        btn1.onclick = () => saveFavoritesCats(data[0].id);
+        btn2.onclick = () => saveFavoritesCats(data[1].id);
     } catch (error) {
         console.error("Error", error)
         spanError.innerHTML = `${error.message} `
@@ -48,7 +44,12 @@ newImageBtn.addEventListener("click", () => {
 // LOAD FAVORITE CATS
 async function loadFavoritesCat(url) {
     try {
-        const response = await fetch(url)
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "X-API-KEY": "live_IXdbF6NTpXDU8aDS8LQPdlyR2xkm0IMGq9Oo8R0X403cKFR0VlI2ZG8JOaZqFbIG",
+            }
+        })
         const data = await response.json()
         if (!response.ok) {
             throw new Error(`Error ${response.status}: ${data.message || "unknown error"}`)
@@ -94,7 +95,9 @@ async function saveFavoritesCats(id) {
         const response = await fetch(API_URL_FAVORITES, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "X-API-KEY": "live_IXdbF6NTpXDU8aDS8LQPdlyR2xkm0IMGq9Oo8R0X403cKFR0VlI2ZG8JOaZqFbIG",
+
             },
             body: JSON.stringify({
                 image_id: id
@@ -120,7 +123,12 @@ async function saveFavoritesCats(id) {
 // DELETE FAVORITES CATS
 async function deleteFavoritesCats(id) {
     try {
-        const response = await fetch(API_URL_FAVORITES_DELETE(id), { method: "DELETE" });
+        const response = await fetch(API_URL_FAVORITES_DELETE(id), {
+            method: "DELETE",
+            headers: {
+                "X-API-KEY": "live_IXdbF6NTpXDU8aDS8LQPdlyR2xkm0IMGq9Oo8R0X403cKFR0VlI2ZG8JOaZqFbIG",
+            }
+        });
 
         if (!response.ok) {
             throw new Error(`Error ${response.status}: ${response.statusText}`);
