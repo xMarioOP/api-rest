@@ -1,4 +1,3 @@
-# api-rest js
 # Cat App Documentation
 
 This project leverages **The Cat API** to display random cat images, manage favorites, and upload cat photos. Below is an overview of the key functionalities implemented in JavaScript.
